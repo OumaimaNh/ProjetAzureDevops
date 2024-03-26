@@ -1,0 +1,33 @@
+trigger:
+- main
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+jobs:
+- job: Frontend
+  displayName: 'Frontend Build and Test'
+  steps:
+  - task: NodeTool@0
+    inputs:
+      versionSpec: '14.x'
+    displayName: 'Install Node.js'
+  - script: |
+      cd ProjetAzurDevops
+      npm install
+    displayName: 'Install Frontend Dependencies'
+  - script: |
+      cd ProjetAzurDevops
+      npm run build
+    displayName: 'Build React App'
+  # Ajoutez des étapes pour les tests frontend
+
+- job: Backend
+  displayName: 'Backend Build and Test'
+  steps:
+  - task: Maven@3
+    inputs:
+      mavenPomFile: 'ProjetAzurDevops/projet_tontine/projet_tontine/Daret/Daret/pom.xml'
+      goals: 'package'
+    displayName: 'Maven Package'
+  # Ajoutez des étapes pour les tests backend
